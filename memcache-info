@@ -209,16 +209,20 @@ function main()
     totalRequests=$(_calc $totalHits+$totalMisses)
     scale=2
     printf "$format" "Requests" $totalRequests
-    printf "$format" "Hits" "$totalHits" "$(_drawSparkLine $totalHits $totalRequests) ($(_calc 100*$totalHits/$totalRequests)%)"
-    printf "$format" "Misses" "$totalMisses" "$(_drawSparkLine $totalMisses $totalRequests) ($(_calc 100*$totalMisses/$totalRequests)%)"
-
+    if (($totalRequests > 0)); then
+        printf "$format" "Hits" "$totalHits" "$(_drawSparkLine $totalHits $totalRequests) ($(_calc 100*$totalHits/$totalRequests)%)"
+        printf "$format" "Misses" "$totalMisses" "$(_drawSparkLine $totalMisses $totalRequests) ($(_calc 100*$totalMisses/$totalRequests)%)"
+    fi
+    
     _echoB "Delete info"
     totalHits=$(getStatsInfo "delete_hits")
     totalMisses=$(getStatsInfo "delete_misses")
     totalRequests=$(_calc $totalHits+$totalMisses)
     printf "$format" "Requests" $totalRequests
-    printf "$format" "Hits" "$totalHits" "$(_drawSparkLine $totalHits $totalRequests) ($(_calc 100*$totalHits/$totalRequests)%)"
-    printf "$format" "Misses" "$totalMisses" "$(_drawSparkLine $totalMisses $totalRequests) ($(_calc 100*$totalMisses/$totalRequests)%)"
+    if (($totalRequests > 0)); then
+        printf "$format" "Hits" "$totalHits" "$(_drawSparkLine $totalHits $totalRequests) ($(_calc 100*$totalHits/$totalRequests)%)"
+        printf "$format" "Misses" "$totalMisses" "$(_drawSparkLine $totalMisses $totalRequests) ($(_calc 100*$totalMisses/$totalRequests)%)"
+    fi
     
     _echoB "Memory info"
     maxMemory=$( getLimitMaxBytes )
