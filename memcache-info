@@ -96,18 +96,22 @@ function _calc
 
 function _drawSparkLine
 {
-    chart="";
+    chart="█";
     scale=1
+    fragPercent=0
 
     if [ "$2" -gt "0" ]; then
         percent=$(_calc "(($1/$2)*100)/5" );
-        for i in `seq 0 $percent`
+        for i in `seq 1 $percent`
         do
             chart=$chart"█"
         done
+
+        scale=2
+        fragPercent=$(_calc 100*$1/$2)
     fi
 
-    _echo $chart
+    _echo $chart" ($fragPercent%)"
 }
 
 function getStatsInfo() 
@@ -212,16 +216,16 @@ function main()
     totalRequests=$(_calc $totalHits+$totalMisses)
     scale=2
     printf "$format" "Requests" $totalRequests
-    printf "$format" "Hits" "$totalHits" "$(_drawSparkLine $totalHits $totalRequests) ($(_calc 100*$totalHits/$totalRequests)%)"
-    printf "$format" "Misses" "$totalMisses" "$(_drawSparkLine $totalMisses $totalRequests) ($(_calc 100*$totalMisses/$totalRequests)%)"
+    printf "$format" "Hits" "$totalHits" "$(_drawSparkLine $totalHits $totalRequests)"
+    printf "$format" "Misses" "$totalMisses" "$(_drawSparkLine $totalMisses $totalRequests)"
 
     _echoB "Delete info"
     totalHits=$(getStatsInfo "delete_hits")
     totalMisses=$(getStatsInfo "delete_misses")
     totalRequests=$(_calc $totalHits+$totalMisses)
     printf "$format" "Requests" $totalRequests
-    printf "$format" "Hits" "$totalHits" "$(_drawSparkLine $totalHits $totalRequests) ($(_calc 100*$totalHits/$totalRequests)%)"
-    printf "$format" "Misses" "$totalMisses" "$(_drawSparkLine $totalMisses $totalRequests) ($(_calc 100*$totalMisses/$totalRequests)%)"
+    printf "$format" "Hits" "$totalHits" "$(_drawSparkLine $totalHits $totalRequests)"
+    printf "$format" "Misses" "$totalMisses" "$(_drawSparkLine $totalMisses $totalRequests)"
     
     _echoB "Memory info"
     maxMemory=$( getLimitMaxBytes )
@@ -232,8 +236,8 @@ function main()
     freeMemory=$(_calc "$maxMemory - ($totalMemoryUsed + $totalMemoryWasted)" )
     freeMemoryPercent=$(_calc "($freeMemory / $maxMemory) * 100" )
     printf "$format" "Max memory" "$(_calc "($maxMemory)/1024/1024") MB"
-    printf "$format" "Free" "$(_calc "($freeMemory)/1024/1024") MB" "$(_drawSparkLine $freeMemory $maxMemory) ($freeMemoryPercent%)"
-    printf "$format" "Total allocated" "$(_calc "($totalMemory)/1024/1024") MB" "$(_drawSparkLine $totalMemory $maxMemory) ($totalMemoryPercent%)"
+    printf "$format" "Free" "$(_calc "($freeMemory)/1024/1024") MB" "$(_drawSparkLine $freeMemory $maxMemory)"
+    printf "$format" "Total allocated" "$(_calc "($totalMemory)/1024/1024") MB" "$(_drawSparkLine $totalMemory $maxMemory)"
     printf "$format" "  - used" "$(_calc "($totalMemoryUsed)/1024/1024") MB"
     printf "$format" "  - wasted" "$(_calc "($totalMemoryWasted)/1024/1024") MB"
 
