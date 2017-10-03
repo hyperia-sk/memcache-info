@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/hyperia-sk/memcache-info.svg?branch=master)](https://travis-ci.org/hyperia-sk/memcache-info) [![codecov](https://codecov.io/gh/hyperia-sk/memcache-info/branch/master/graph/badge.svg)](https://codecov.io/gh/hyperia-sk/memcache-info)
 
-> `memcache-info` is a simple and efficient way to show info about Memcached.
+> `memcache-info` is a simple and efficient way to show info about Memcache.
 
 ![screenshot](https://user-images.githubusercontent.com/6382002/31081331-d382066e-a78b-11e7-8979-cd3faf33629b.png)
 
