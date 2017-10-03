@@ -65,10 +65,10 @@ function _echo
 }
 
 slabStats=$(mktemp)
-_echo "stats slabs" | nc $HOST_NAME $PORT > $slabStats || (_echo "${red}Connect to $HOST_NAME:$PORT failed.${normal}" && exit 1)
+_echo "stats slabs" | nc -q 1 $HOST_NAME $PORT > $slabStats || (_echo "${red}Connect to $HOST_NAME:$PORT failed.${normal}" && exit 1)
 
 stats=$(mktemp)
-_echo "stats" | nc $HOST_NAME $PORT > $stats
+_echo "stats" | nc -q 1 $HOST_NAME $PORT > $stats
 
 function isInteger() 
 {
@@ -98,11 +98,14 @@ function _drawSparkLine
 {
     chart="";
     scale=1
-    percent=$(_calc "(($1/$2)*100)/5" );
-    for i in `seq 0 $percent`
-    do
-        chart=$chart"█"
-    done
+
+    if [ "$2" -gt "0" ]; then
+        percent=$(_calc "(($1/$2)*100)/5" );
+        for i in `seq 0 $percent`
+        do
+            chart=$chart"█"
+        done
+    fi
 
     _echo $chart
 }

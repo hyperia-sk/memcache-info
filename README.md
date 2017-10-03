@@ -12,8 +12,11 @@
 memcache-info
 ```
 
+or execute periodicaly `watch --interval=1 "memcache-info -r"` 
+
 #### Parameters
-```
+
+```bash
 memcache-info [ -n | -p | -h | -r ]
 
 -n <ip|hostname>
