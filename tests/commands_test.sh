@@ -11,7 +11,6 @@ assert_contains "$src" "Connection info" 127
 assert_contains "$src" "Get info" 127
 assert_contains "$src" "Delete info" 127
 assert_contains "$src" "Memory info" 127
-assert_contains "$src -h" "Command show statistics of Memcached" 127
 assert_contains "$src -r" "Memory info" 127
 assert_contains "$src -p 11211" "Memory info" 127
 assert_contains "$src -n localhost" "Memory info" 127

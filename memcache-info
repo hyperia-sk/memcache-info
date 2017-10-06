@@ -6,14 +6,24 @@ white=$(tput bold)
 red=$(tput setaf 1)
 green=$(tput setaf 2)
 yellow=$(tput setaf 3)
+blue=$(tput setaf 6)
 normal=$(tput sgr0)
 readonly format="%-18s %-10s %-30s\n"
+subject="Memcache Stats"
+
+function logo()
+{
+    echo "${blue}  _   _                      ${yellow}_${normal}"
+    echo "${blue} | | | |_   _ _ __   ___ _ _${yellow}(_)${normal}${blue} __ _ ${normal}"
+    echo "${blue} | |_| | | | | '_ \ / _ \ '_${yellow}| |${normal}${blue}/ _' |${normal}"
+    echo "${blue} |  _  | |_| | |_) |  __/ | ${yellow}| |${normal}${blue} (_| |${normal}"
+    echo "${blue} |_| |_|\__, | .__/ \___|_| ${yellow}|_|${normal}${blue}\__,_|${normal}"
+    echo "${blue}        |___/|_|       ${normal}${white}$subject${normal}"
+}
 
 function usage() 
 {
-    echo ""
-    echo "${yellow}Command show statistics of Memcached${normal}"
-
+    logo
     cat <<EOF
 
 usage:
@@ -192,7 +202,7 @@ function getTotalMemoryWasted()
 
 function main() 
 {
-    _echoB "Memcache Stats"
+    _echoB "$subject"
     printf "$format" "Version" "$(getStatsInfo "version")"
     printf "$format" "PID" $(getStatsInfo "pid")
     uptime=$(getStatsInfo "uptime")
