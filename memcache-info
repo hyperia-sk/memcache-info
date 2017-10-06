@@ -202,7 +202,9 @@ function getTotalMemoryWasted()
 
 function main() 
 {
-    _echoB "$subject"
+    logo
+    _echo ""
+
     printf "$format" "Version" "$(getStatsInfo "version")"
     printf "$format" "PID" $(getStatsInfo "pid")
     uptime=$(getStatsInfo "uptime")
@@ -253,6 +255,15 @@ function main()
 
     _echo ""
 }
+
+if [[ $COLOR == 0 ]]; then
+    white=""
+    red=""
+    green=""
+    yellow=""
+    blue=""
+    normal=""
+fi
 
 main
 exit

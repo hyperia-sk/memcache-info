@@ -135,7 +135,7 @@ _assert_with_grep() {
     shift 2
 
     while [ $# != 0 ]; do
-    	assert_raises "echo '$output' | $GREP $grep_modifier '$1'" $exitcode || return 1
+    	assert_raises "echo \"$output\" | $GREP $grep_modifier '$1'" $exitcode || return 1
     	shift
     done
 }
